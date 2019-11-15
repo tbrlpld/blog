@@ -80,6 +80,8 @@ Draft: False
 * Right now this is not converted to HTML yet. The site will not yet show it. 
 * To get this into HTML we need to run the build command again `pelican content` (run in the repo source directory). 
 
+![lpld.io Logo]({static}/images/logo.svg)
+
 * To get this online, push the changes to GitHub. 
 * Netlify will automatically process the changes and publish the changes and make them available online. This takes just a few seconds.
 
