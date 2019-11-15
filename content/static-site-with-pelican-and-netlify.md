@@ -7,7 +7,7 @@ Authors: Tibor
 Summary: This blog is running as a static site generated with Pelican and Netlify. Here is how it is set up. 
 Draft: False
 
-# Creating Static Websites with Pelican and Netlify
+*Full Disclosure: This is still a draft of an article, but it already put it online as an example post. I will rework the content over the next few days to make it a proper article. Right now this is just my collection of notes I made while following the course lessons for days 29 - 32 of [#100DaysOfWeb in Python](https://github.com/tbrlpld/100daysofweb-with-python-course/tree/master/days/029-032-static-site-gen)*.
 
 ## Static websites
 * Series of webpages with fixed content
