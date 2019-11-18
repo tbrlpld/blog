@@ -10,7 +10,7 @@ PUBLISHCONF=$(BASEDIR)/publishconf.py
 
 THEMEREPO?=https://github.com/arulrajnet/attila.git 
 TEMPDIR=$(shell mktemp -d)
-THEMECLONETARGET=/tmp/$(TEMPDIR)/attila/
+THEMECLONETARGET=$(TEMPDIR)/attila/
 GIT?=git
 
 DEBUG ?= 0
