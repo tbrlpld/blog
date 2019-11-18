@@ -9,8 +9,8 @@ CONFFILE=$(BASEDIR)/pelicanconf.py
 PUBLISHCONF=$(BASEDIR)/publishconf.py
 
 THEMEREPO?=https://github.com/arulrajnet/attila.git 
-TEMPDIR=$(shell mktemp -d)
-THEMECLONETARGET=$(TEMPDIR)/attila/
+# TEMPDIR=$(shell mktemp -d)
+THEMECLONETARGET=/tmp/attila-$$RANDOM/attila/
 GIT?=git
 
 DEBUG ?= 0
