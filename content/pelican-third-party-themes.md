@@ -5,7 +5,7 @@ Tags: Python, Pelican, Netlify, Static Sites, Theme
 Slug: pelican-third-party-theme
 Authors: Tibor
 Summary: The current default theme for pelican is not responsive. You could create a totally custom one or add an existing third-party pelican theme to your page. This article explains how to do the latter.
-Draft: False
+Draft: True
 
 * Current default theme is not responsive. I am currently working to add at least a [responsive grid layout](https://github.com/tbrlpld/pelican/tree/add-mcss-grid). 
 * You could create your own theme. Check out the [Creating themes — Pelican 4.2.0 documentation](https://docs.getpelican.com/en/stable/themes.html#) to see how to do this.
@@ -110,6 +110,3 @@ $ cp -r ~/Downloads/attila-master/* themes/attila/
 * Build the site `make html` (this command is automatically provided in the Makefile that is created during the `pelican-quickstart`).  
 * You can remove the `build` command and the changes made to the makefile in the previous step. They are not needed anymore. 
 * Make sure to update the build command in Netlify to `make html` to build the page the correct way. 
-
-#dev/blog
-#dev/courses/100DaysOfWeb in Python#
