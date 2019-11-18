@@ -8,11 +8,6 @@ OUTPUTDIR=$(BASEDIR)/output
 CONFFILE=$(BASEDIR)/pelicanconf.py
 PUBLISHCONF=$(BASEDIR)/publishconf.py
 
-THEMEREPO?=https://github.com/arulrajnet/attila.git 
-# TEMPDIR=$(shell mktemp -d)
-THEMECLONETARGET=/tmp/attila-$$RANDOM/attila/
-GIT?=git
-
 DEBUG ?= 0
 ifeq ($(DEBUG), 1)
 	PELICANOPTS += -D
@@ -45,8 +40,6 @@ html:
 	$(PELICAN) $(INPUTDIR) -o $(OUTPUTDIR) -s $(CONFFILE) $(PELICANOPTS)
 
 build:
-	$(GIT) clone $(THEMEREPO) $(THEMECLONETARGET)
-	$(PELICAN)-themes --install $(THEMECLONETARGET)
 	$(PELICAN) $(INPUTDIR) -o $(OUTPUTDIR) -s $(CONFFILE) $(PELICANOPTS)
 
 clean:
