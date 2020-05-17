@@ -24,7 +24,7 @@ Now, the code that is using the concrete implementation (the consumer) should on
 
 ## How Can We Make Sure to Only Use Features of the Abstraction?
 
-We could look only at the abstract class while working with the concrete one and only use the methods and attributes defined in the abstract base class. Yea… that sounds fun. Or we can use a type checker like `mypy`.
+We could look only at the abstract class while working with the concrete one and only use the methods and attributes defined in the abstract base class. Yea… that sounds fun. Or we can use a type checker like [`mypy`](http://mypy-lang.org/).
 
 In our consumer we can define the instance of the concrete class as being of the abstract base class’ type. If we do so, `mypy` will show a warning that we are using an attribute that is not defined by the type we said we were using.
 
