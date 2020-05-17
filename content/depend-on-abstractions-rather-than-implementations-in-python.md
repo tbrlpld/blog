@@ -12,7 +12,7 @@ I am currently reading [Clean Architecture by Robert C. Martin (Uncle Bob)](http
 
 Of course, this is not always possible. For example, the `str` class in Python is a concrete implementation. It would also be ridiculous trying to avoid using it directly. But, depending on `str` is not an issue that the dependency inversion principle is really concerned with. This is because the `str` class is very **stable.**
 
-But, depending on any concrete implementation should be avoided as much as possible. Especially, we should avoid depending on our own classes that are under current development and are constantly changing.
+Not all classes and dependencies are as stable as the `str` class of the standard library, though. We should especially avoid depending on our own classes that are under current development and constantly changing.
 
 ## How Can We Avoid Depending on Concrete Implementations?
 
@@ -26,7 +26,7 @@ Now, the code that is using the concrete implementation (the consumer) should on
 
 We could look only at the abstract class while working with the concrete one and only use the methods and attributes defined in the abstract base class. Yea… that sounds fun. Or we can use a type checker like `mypy`.
 
-In our consumer we can define the instance of the concrete class as being of the abstract base class’ type. If we do so, `mypy` will show a warning that we are using an attribute that is not defined by the type we specified we are using.
+In our consumer we can define the instance of the concrete class as being of the abstract base class’ type. If we do so, `mypy` will show a warning that we are using an attribute that is not defined by the type we said we were using.
 
 ## Let’s Implement This
 
@@ -46,6 +46,9 @@ class AbstractBase(abc.ABC):
 
 Next, we create an implementation of the abstract class (in `concrete.py`).
 ```python
+import abstract
+
+
 class ConcreteClass(abstract.AbstractBase):
     """Concrete implementation."""
 
@@ -56,11 +59,12 @@ class ConcreteClass(abstract.AbstractBase):
         return single_string * 2
 ```
 
-Our `ConcreteClass` actually implements the functionality defined by the abstract base class, but also adds an another method. The consumer of the concrete class should never use the additional methods. If it does, then it depends on the concrete implementation. And that should always be avoided as much as possible.
+Our `ConcreteClass` actually implements the functionality defined by the abstract base class, but also adds an another method. The consumer of the concrete class should never use the additional methods. If it does, then it depends on the concrete implementation. And that should be avoided as much as possible.
 
-Now let’s create a consumer (in `consumer.py`) that uses the concrete implementation, but should only rely on what is defined in the abstract base class.
+Now, let’s create a consumer (in `consumer.py`) that uses the concrete implementation, but should only rely on what is defined in the abstract base class.
 ```python
 import concrete
+
 
 concrete_obj1 = concrete.ConcreteClass()
 print(concrete_obj1.multiplystring("something", 3))
@@ -68,10 +72,11 @@ print(concrete_obj1.doublestring("something"))
 
 ```
 
-No warnings so far. We have not "told" `mypy` that we only want to use the
-"interface" (attributes and methods) defined by the abstract base class.
+No warnings so far. We are using an interface that we shouldn't and `mypy` is not warning us.
 
-Let’s tell `mypy` that we only want to use the functionality of the abstract base class .  To do so, we add a type annotation to declare our variable to be of the abstract base class’ type.
+ This is because we have not "told" `mypy` yet that we only want to use the "interface" (attributes and methods) defined by the abstract base class.
+
+Let’s tell `mypy` that we only want to use the functionality of the abstract base class. To do so, we add a type annotation to declare our variable to be of the abstract base class’ type.
 ```python
 import abstract  # add this import
 import concrete
@@ -96,11 +101,12 @@ Nice. So `mypy` is now warning us, that we are trying to use functionality that 
 
 ## How Is This Helpful?
 
-While somebody is developing the `ConcreteClass`, they might consistently add and remove methods and attributes. In the meantime, we might want to make use of some features they have already implemented in another section of the app (we are working on the consumer).
+While somebody is developing the `ConcreteClass`, they might consistently add and remove methods and attributes.
+In the meantime, we are working on the consumer and might want to make use of some features that is already part of the concrete class.
 
 If we don’t have an abstract interface in-between the consumer and the concrete implementation, we might start using functionality that is later removed from the concrete implementation.
 
-On the other hand, if we do have an abstract base class, then we on the consumer side know which functions we can rely on using. Also, the abstract base class tells any developer of the concrete implementation which attributes and methods should be included in the concrete implementation. They can extend this functionality, but they can not remove any features (otherwise their class remains abstract and can not be instantiated).
+On the other hand, if we do have an abstract base class, then we on the consumer side know which functions we can rely on using. Also, the abstract base class tells the developers of the concrete implementation which attributes and methods should be included in the concrete implementation. They can extend this functionality, but they can not remove any features (otherwise their class remains abstract and can not be instantiated).
 
 One requirement here is, of course, that the interface is stable. If somebody keeps adding and removing methods and attributes in the abstract base class, then nothing is won. But, it is much easier to keep something abstract stable than it is to keep a concrete implementation stable.
 
@@ -146,6 +152,10 @@ Instead of running the consumer directly, we are running it through the injector
 
 Why would we want to do this?
 
-The advantages you get by using the dependency injection have mainly to do with flexibility and ease of testing. You could now switch out the concrete implementation without having to change the consumer. This is particularly handy during testing. You could test the consumer without having a concrete implementation. The [Wikipedia article on dependency injection](https://en.wikipedia.org/wiki/Dependency_injection) goes into more detail.
+The advantages you get by using the dependency injection have mainly to do with flexibility and ease of testing. You could now switch out the concrete implementation without having to change the consumer. This is particularly handy during testing. You could even test the consumer without having any concrete implementation, yet. The [Wikipedia article on dependency injection](https://en.wikipedia.org/wiki/Dependency_injection) goes into more detail.
 
 I only wanted to mention it here, because it seemed like a natural next step.
+
+***
+
+Hope you found this article helpful. If I missed something or got this all wrong, or all right, [let me know](https://twitter.com/tbrlpld).
